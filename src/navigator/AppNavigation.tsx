@@ -12,8 +12,9 @@ import {
 } from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 
-import HomeScreen from '../screens/Home/Home';
+import HomeScreen from '@/screens/Home/Home';
 import styles from './styles';
+import {TabParamList} from '@/types/app';
 
 function Home() {
   return <HomeScreen />;
@@ -47,18 +48,18 @@ const getTabIcon = (routeName: string, focused: boolean): any => {
   switch (routeName) {
     case 'Home':
       return focused
-        ? require('../assets/images/home_active.png') // active icon
-        : require('../assets/images/home.png');
+        ? require('@/assets/images/home_active.png') // active icon
+        : require('@/assets/images/home.png');
     case 'Outfit':
       return focused
-        ? require('../assets/images/outfit_active.png') // active icon
-        : require('../assets/images/outfit.png');
+        ? require('@/assets/images/outfit_active.png') // active icon
+        : require('@/assets/images/outfit.png');
     // case 'Wardrobe':
-    //   return require('../assets/images/wardrobe.png');
+    //   return require('@/assets/images/wardrobe.png');
     // case 'Settings':
-    //   return require('../assets/images/settings.png');
+    //   return require('@/assets/images/settings.png');
     default:
-      return require('../assets/images/home.png');
+      return require('@/assets/images/home.png');
   }
 };
 
@@ -76,7 +77,7 @@ const screenOptions = ({
   },
 });
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabParamList>();
 
 export default function AppNavigator() {
   return (
