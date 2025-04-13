@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Image, Text, View} from 'react-native';
 import {
   BottomTabNavigationOptions,
@@ -12,9 +12,12 @@ import {
 } from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 
+import i18n from 'i18next';
+
 import HomeScreen from '@/screens/Home/Home';
 import styles from './styles';
 import {TabParamList} from '@/types/app';
+import {getPhoneInfo} from '@/helpers';
 
 function Home() {
   return <HomeScreen />;
@@ -80,6 +83,10 @@ const screenOptions = ({
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export default function AppNavigator() {
+  useEffect(() => {
+    getPhoneInfo.getPhoneLanguage();
+  }, []);
+
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>

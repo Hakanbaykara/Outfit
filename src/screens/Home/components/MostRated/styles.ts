@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   mostRatedText: {
-    marginTop: 45,
+    marginTop: 0,
     alignItems: 'flex-start',
   },
   mostRatedTitle: {

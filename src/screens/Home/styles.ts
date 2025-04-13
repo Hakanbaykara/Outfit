@@ -2,9 +2,9 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   main: {
+    flex: 1,
     backgroundColor: '#f8f8ff',
     padding: 20,
-    // alignItems: 'center',
   },
   titleMain: {
     margin: 20,
@@ -13,19 +13,6 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 45,
-    color: 'black',
-  },
-  outfitMain: {
-    borderColor: 'Black',
-    borderRadius: 30,
-    borderWidth: 2,
-    marginTop: 30,
-    paddingVertical: 20,
-    marginHorizontal: '10%',
-    alignItems: 'center',
-  },
-  outfitTitle: {
-    fontSize: 25,
     color: 'black',
   },
   mostRatedText: {

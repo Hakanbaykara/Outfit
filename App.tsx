@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
+import '@/language';
 import React from 'react';
 
 import {Provider} from 'react-redux';
