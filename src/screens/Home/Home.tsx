@@ -18,8 +18,8 @@ const HomeScreen: React.FC = () => {
           {t('Outfit')}
         </Text>
       </View>
-      <MostRated />
       <CreateOutfit />
+      <MostRated />
     </ScrollViewComp>
   );
 };
