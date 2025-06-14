@@ -1,13 +1,17 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-
 export type TabParamList = {
   Home: undefined;
   Outfit: undefined;
-  Wardrobe: undefined;
-  Settings: undefined;
+  Profile: undefined;
 };
 
-export type HomeScreenNavigationProp = NativeStackNavigationProp<
-  TabParamList,
-  'Home'
->;
+export type HomeStackParamList = {
+  HomeScreen: undefined;
+  PostDetail: {postId: string; imageUrl: string};
+  NewPost: {imageUrl: string};
+};
+
+export type ProfileStackParamList = {
+  ProfilePage: undefined;
+  PostDetail: {postId: string; imageUrl: string};
+  NewPost: undefined;
+};

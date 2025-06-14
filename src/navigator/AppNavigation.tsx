@@ -11,38 +11,27 @@ import {
   Theme,
 } from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import i18n from 'i18next';
 
-import HomeScreen from '@/screens/Home/Home';
 import styles from './styles';
-import {TabParamList} from '@/types/app';
+import {
+  TabParamList,
+  HomeStackParamList,
+  ProfileStackParamList,
+} from '@/types/app';
+import HomeScreen from '@/screens/Home/Home';
 import {getPhoneInfo} from '@/helpers';
-
-function Home() {
-  return <HomeScreen />;
-}
+import ProfileScreen from '@/screens/ProfileScreen/ProfileScreen';
+import PostDetailScreen from '@/screens/PostDetailScreen/PostDetailScreen';
+import NewPostScreen from '@/screens/NewPostScreen/NewPostScreen';
 
 function OutfitScreen() {
   return (
     <View>
       <Text>Outfit Suggestions</Text>
-    </View>
-  );
-}
-
-function WardrobeScreen() {
-  return (
-    <View>
-      <Text>Your Wardrobe</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View>
-      <Text>Settings</Text>
     </View>
   );
 }
@@ -80,6 +69,31 @@ const screenOptions = ({
   },
 });
 
+// Stack Navigator for Home tab
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
+
+function HomeStackNavigator() {
+  return (
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
+      <HomeStack.Screen name="PostDetail" component={PostDetailScreen} />
+      <HomeStack.Screen name="NewPost" component={NewPostScreen} />
+    </HomeStack.Navigator>
+  );
+}
+
+// Stack Navigator for Profile tab
+const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
+
+function ProfileStackNavigator() {
+  return (
+    <ProfileStack.Navigator screenOptions={{headerShown: false}}>
+      <ProfileStack.Screen name="ProfilePage" component={ProfileScreen} />
+      <ProfileStack.Screen name="PostDetail" component={PostDetailScreen} />
+    </ProfileStack.Navigator>
+  );
+}
+
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export default function AppNavigator() {
@@ -90,10 +104,9 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Home" component={HomeStackNavigator} />
         <Tab.Screen name="Outfit" component={OutfitScreen} />
-        <Tab.Screen name="Wardrobe" component={WardrobeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Profile" component={ProfileStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   );
