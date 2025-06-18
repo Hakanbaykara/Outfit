@@ -12,6 +12,7 @@ import {
 } from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useAppSelector} from '@/redux/store';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import i18n from 'i18next';
@@ -21,9 +22,11 @@ import {
   TabParamList,
   HomeStackParamList,
   ProfileStackParamList,
+  LoginStackParamList,
 } from '@/types/app';
 import HomeScreen from '@/screens/Home/Home';
 import {getPhoneInfo} from '@/helpers';
+import SignUpScreen from '@/screens/SignUpScreen/SignUpScreen';
 import ProfileScreen from '@/screens/ProfileScreen/ProfileScreen';
 import PostDetailScreen from '@/screens/PostDetailScreen/PostDetailScreen';
 import NewPostScreen from '@/screens/NewPostScreen/NewPostScreen';
@@ -70,6 +73,17 @@ const screenOptions = ({
 });
 
 // Stack Navigator for Home tab
+const LoginStack = createNativeStackNavigator<LoginStackParamList>();
+
+function LoginStackNavigator() {
+  return (
+    <LoginStack.Navigator screenOptions={{headerShown: false}}>
+      <LoginStack.Screen name="SignUp" component={SignUpScreen} />
+    </LoginStack.Navigator>
+  );
+}
+
+// Stack Navigator for Home tab
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 function HomeStackNavigator() {
@@ -97,6 +111,8 @@ function ProfileStackNavigator() {
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export default function AppNavigator() {
+  const isToken = useAppSelector(state => state.account.isToken);
+
   useEffect(() => {
     getPhoneInfo.getPhoneLanguage();
   }, []);
@@ -104,9 +120,12 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Home" component={HomeStackNavigator} />
-        <Tab.Screen name="Outfit" component={OutfitScreen} />
-        <Tab.Screen name="Profile" component={ProfileStackNavigator} />
+        {!isToken && <Tab.Screen name="Login" component={LoginStackNavigator} />}
+        {isToken && <Tab.Screen name="Home" component={HomeStackNavigator} />}
+        {isToken && <Tab.Screen name="Outfit" component={OutfitScreen} />}
+        {isToken && (
+          <Tab.Screen name="Profile" component={ProfileStackNavigator} />
+        )}
       </Tab.Navigator>
     </NavigationContainer>
   );

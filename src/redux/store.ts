@@ -1,8 +1,32 @@
-// src/redux/store.ts
 import {configureStore} from '@reduxjs/toolkit';
+import {persistStore, persistReducer} from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import outfit from './reducers/outfit';
+import account from './reducers/account';
 
-export const store = configureStore({reducer: {outfit}});
+const accountPersistConfig = {
+  key: 'account',
+  storage: AsyncStorage,
+  whitelist: ['email', 'isToken'],
+};
+
+const persistedAccountReducer = persistReducer(accountPersistConfig, account);
+
+export const store = configureStore({
+  reducer: {
+    outfit,
+    account: persistedAccountReducer,
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+      },
+    }),
+});
+
+export const persistor = persistStore(store);
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

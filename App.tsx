@@ -4,17 +4,27 @@ import '@/language';
 import React from 'react';
 
 import {Provider} from 'react-redux';
-import {store} from './src/redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor} from './src/redux/store';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {StatusBar} from 'react-native';
 import AppNavigator from './src/navigator/AppNavigation';
 
 function App(): React.JSX.Element {
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
-        <AppNavigator />
-      </SafeAreaProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
+          <StatusBar
+            barStyle="dark-content"
+            backgroundColor="transparent"
+            translucent={true}
+            hidden
+          />
+          <AppNavigator />
+        </SafeAreaProvider>
+      </PersistGate>
     </Provider>
   );
 }
