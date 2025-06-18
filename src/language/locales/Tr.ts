@@ -1,7 +1,14 @@
 export const Tr = {
   translation: {
     Outfit: 'Kombin',
-    create_outfit: 'Kombinini oluştur',
-    change_language: 'Dili değiştir',
+    signUp: {
+      signUp: 'Üye ol',
+      email: 'Email',
+      password: 'Şifre',
+      agreedTerms: 'Şartlar ve Koşulları kabul ediyorum',
+      withGoogle: 'Google ile kayıt ol',
+      withFacebook: 'Facebook ile kayıt ol',
+      alreadyHave: 'Already have an account? Sign In',
+    },
   },
 };

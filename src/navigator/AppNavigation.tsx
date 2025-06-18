@@ -49,10 +49,10 @@ const getTabIcon = (routeName: string, focused: boolean): any => {
       return focused
         ? require('@/assets/images/outfit_active.png') // active icon
         : require('@/assets/images/outfit.png');
-    // case 'Wardrobe':
-    //   return require('@/assets/images/wardrobe.png');
-    // case 'Settings':
-    //   return require('@/assets/images/settings.png');
+    case 'SignUp':
+      return focused
+        ? require('@/assets/images/outfit_active.png') // active icon
+        : require('@/assets/images/outfit.png');
     default:
       return require('@/assets/images/home.png');
   }
@@ -68,11 +68,14 @@ const screenOptions = ({
   headerShown: false,
   tabBarIcon: ({focused}) => {
     const iconSource = getTabIcon(route.name, focused);
+    // if (route.name === 'SignUp') {
+    //   return null;
+    // }
     return <Image source={iconSource} style={styles.icon} />;
   },
 });
 
-// Stack Navigator for Home tab
+// Stack Navigator for Login
 const LoginStack = createNativeStackNavigator<LoginStackParamList>();
 
 function LoginStackNavigator() {
@@ -120,7 +123,9 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
-        {!isToken && <Tab.Screen name="Login" component={LoginStackNavigator} />}
+        {!isToken && (
+          <Tab.Screen name="Login" component={LoginStackNavigator} />
+        )}
         {isToken && <Tab.Screen name="Home" component={HomeStackNavigator} />}
         {isToken && <Tab.Screen name="Outfit" component={OutfitScreen} />}
         {isToken && (
