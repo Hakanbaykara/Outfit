@@ -3,15 +3,13 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface AccountState {
   email: string;
-  password: string;
-  agreedTerms: boolean;
+  token: string;
   isToken: boolean;
 }
 
 const initialState: AccountState = {
   email: '',
-  password: '',
-  agreedTerms: false,
+  token: '',
   isToken: false,
 };
 
@@ -22,11 +20,8 @@ const accountSlice = createSlice({
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
     },
-    setPassword: (state, action: PayloadAction<string>) => {
-      state.password = action.payload;
-    },
-    setAgreedTerms: (state, action: PayloadAction<boolean>) => {
-      state.agreedTerms = action.payload;
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
     },
     setIsToken: (state, action: PayloadAction<boolean>) => {
       state.isToken = action.payload;

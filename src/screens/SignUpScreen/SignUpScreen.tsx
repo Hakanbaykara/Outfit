@@ -7,25 +7,24 @@ import {
   ScrollView,
 } from 'react-native';
 
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {LoginStackParamList} from '@/types/app';
+
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import {getValidationSchema} from './validationSchema';
 
 import {useTranslation} from 'react-i18next';
 
 import styles from './styles';
 
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email('Geçerli bir email girin')
-    .required('Email gerekli'),
-  password: yup.string().min(6, 'En az 6 karakter').required('Şifre gerekli'),
-  acceptTerms: yup.bool().oneOf([true], 'Şartları kabul etmelisiniz'),
-});
-
 const SignUpScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<LoginStackParamList>>();
   const {t} = useTranslation();
+
+  const schema = getValidationSchema(t);
 
   const {
     control,
@@ -94,7 +93,7 @@ const SignUpScreen = () => {
           />
         </View>
         {errors.password && (
-          <Text style={styles.input}>{errors.password.message}</Text>
+          <Text style={styles.errorText}>{errors.password.message}</Text>
         )}
 
         <View style={styles.checkboxRow}>
@@ -103,20 +102,24 @@ const SignUpScreen = () => {
             name="acceptTerms"
             render={({field: {value, onChange}}) => (
               <TouchableOpacity
-                onPress={() => onChange(!value)}
-                style={
-                  (styles.checkboxBox,
+                onPress={() => {
+                  onChange(!value);
+                  console.log('click', value);
+                }}
+                style={[
+                  styles.checkboxBox,
+                  // eslint-disable-next-line react-native/no-inline-styles
                   {
                     backgroundColor: value ? '#2090f3' : 'transparent',
-                  })
-                }
+                  },
+                ]}
               />
             )}
           />
           <Text style={styles.checkboxText}>{t('signUp.agreedTerms')}</Text>
         </View>
         {errors.acceptTerms && (
-          <Text style={styles.input}>{errors.acceptTerms.message}</Text>
+          <Text style={styles.errorText}>{errors.acceptTerms.message}</Text>
         )}
 
         <TouchableOpacity
@@ -139,9 +142,11 @@ const SignUpScreen = () => {
         </View>
       </View>
 
-      <View style={styles.signInTextContainer}>
+      <TouchableOpacity
+        style={styles.signInTextContainer}
+        onPress={() => navigation.navigate('Login')}>
         <Text style={styles.signInText}>{t('signUp.alreadyHave')}</Text>
-      </View>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

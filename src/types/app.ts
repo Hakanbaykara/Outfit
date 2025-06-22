@@ -2,11 +2,12 @@ export type TabParamList = {
   Home: undefined;
   Outfit: undefined;
   Profile: undefined;
-  Login: undefined;
+  Auth: undefined;
 };
 
 export type LoginStackParamList = {
   SignUp: undefined;
+  Login: undefined;
 };
 
 export type HomeStackParamList = {

@@ -12,6 +12,8 @@ import {
 } from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+
 import {useAppSelector} from '@/redux/store';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,6 +32,7 @@ import SignUpScreen from '@/screens/SignUpScreen/SignUpScreen';
 import ProfileScreen from '@/screens/ProfileScreen/ProfileScreen';
 import PostDetailScreen from '@/screens/PostDetailScreen/PostDetailScreen';
 import NewPostScreen from '@/screens/NewPostScreen/NewPostScreen';
+import LoginScreen from '@/screens/LoginScreen/LoginScreen';
 
 function OutfitScreen() {
   return (
@@ -37,6 +40,12 @@ function OutfitScreen() {
       <Text>Outfit Suggestions</Text>
     </View>
   );
+}
+
+function getTabBarVisibility(route: RouteProp<ParamListBase, string>) {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  const hiddenRoutes = ['PostDetail', 'Login', 'SignUp'];
+  return !hiddenRoutes.includes(routeName || '');
 }
 
 const getTabIcon = (routeName: string, focused: boolean): any => {
@@ -49,7 +58,7 @@ const getTabIcon = (routeName: string, focused: boolean): any => {
       return focused
         ? require('@/assets/images/outfit_active.png') // active icon
         : require('@/assets/images/outfit.png');
-    case 'SignUp':
+    case 'Auth':
       return focused
         ? require('@/assets/images/outfit_active.png') // active icon
         : require('@/assets/images/outfit.png');
@@ -64,24 +73,30 @@ const screenOptions = ({
   route: RouteProp<ParamListBase, string>;
   navigation: BottomTabNavigationProp<ParamListBase, string>;
   theme: Theme;
-}): BottomTabNavigationOptions => ({
-  headerShown: false,
-  tabBarIcon: ({focused}) => {
-    const iconSource = getTabIcon(route.name, focused);
-    // if (route.name === 'SignUp') {
-    //   return null;
-    // }
-    return <Image source={iconSource} style={styles.icon} />;
-  },
-});
+}): BottomTabNavigationOptions => {
+  const showTabBar = getTabBarVisibility(route);
+
+  return {
+    headerShown: false,
+    tabBarIcon: ({focused}) => {
+      const iconSource = getTabIcon(route.name, focused);
+      return <Image source={iconSource} style={styles.icon} />;
+    },
+    tabBarStyle: {
+      display: showTabBar ? 'flex' : 'none',
+    },
+  };
+};
 
 // Stack Navigator for Login
 const LoginStack = createNativeStackNavigator<LoginStackParamList>();
 
 function LoginStackNavigator() {
   return (
-    <LoginStack.Navigator screenOptions={{headerShown: false}}>
+    <LoginStack.Navigator
+      screenOptions={{headerShown: false, navigationBarColor: '#2090f3'}}>
       <LoginStack.Screen name="SignUp" component={SignUpScreen} />
+      <LoginStack.Screen name="Login" component={LoginScreen} />
     </LoginStack.Navigator>
   );
 }
@@ -123,9 +138,7 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
-        {!isToken && (
-          <Tab.Screen name="Login" component={LoginStackNavigator} />
-        )}
+        {!isToken && <Tab.Screen name="Auth" component={LoginStackNavigator} />}
         {isToken && <Tab.Screen name="Home" component={HomeStackNavigator} />}
         {isToken && <Tab.Screen name="Outfit" component={OutfitScreen} />}
         {isToken && (

@@ -7,7 +7,7 @@ import account from './reducers/account';
 const accountPersistConfig = {
   key: 'account',
   storage: AsyncStorage,
-  whitelist: ['email', 'isToken'],
+  whitelist: ['email', 'token', 'isToken'],
 };
 
 const persistedAccountReducer = persistReducer(accountPersistConfig, account);
