@@ -1,10 +1,20 @@
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+
+import {useTranslation} from 'react-i18next';
+import {useAppDispatch} from '@/redux/store';
+// import {CommonActions, useNavigation} from '@react-navigation/native';
+// import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+// import {RootStackParamList} from '@/types/app';
+
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useTranslation} from 'react-i18next';
 import {getLoginSchema} from './validationSchema';
+
+import {login} from '@/redux/services/auth';
+import {getToken} from '@/utils/authStorage';
 import styles from './styles';
+import {setIsToken} from '@/redux/reducers/account';
 
 interface FormValues {
   email: string;
@@ -13,6 +23,10 @@ interface FormValues {
 
 const LoginScreen: React.FC = () => {
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
+  // const navigation =
+  //   useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   const schema = getLoginSchema(t);
 
   const {
@@ -23,8 +37,23 @@ const LoginScreen: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
+  const handleLogin = async (data: {email: string; password: string}) => {
+    try {
+      const user = await login(data);
+      console.log('Welcome', user);
+
+      const token = await getToken();
+      if (token) {
+        dispatch(setIsToken(true));
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+    }
+  };
+
   const onSubmit = (data: FormValues) => {
     console.log('Login data:', data);
+    handleLogin(data);
   };
 
   return (
@@ -81,7 +110,9 @@ const LoginScreen: React.FC = () => {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.socialButton}>
-        <Text style={styles.socialButtonText}>{t('signIn.signInWithApple')}</Text>
+        <Text style={styles.socialButtonText}>
+          {t('signIn.signInWithApple')}
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity

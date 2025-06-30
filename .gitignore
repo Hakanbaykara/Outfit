@@ -75,3 +75,6 @@ package-lock.json
 !.yarn/sdks
 !.yarn/versions
 yarn.lock
+
+# ENV
+.env

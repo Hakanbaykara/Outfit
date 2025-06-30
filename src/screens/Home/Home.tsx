@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -72,8 +73,9 @@ const HomeScreen: React.FC = () => {
   const counter = useAppSelector(state => state.outfit.value);
   const [search, setSearch] = useState('');
 
+  const insets = useSafeAreaInsets();
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, {paddingTop: insets.top}]}>
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}

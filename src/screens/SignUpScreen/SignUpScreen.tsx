@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LoginStackParamList} from '@/types/app';
 
@@ -16,13 +16,17 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {getValidationSchema} from './validationSchema';
 
 import {useTranslation} from 'react-i18next';
+import {useAppDispatch} from '@/redux/store';
 
 import styles from './styles';
+import {signup} from '@/redux/services/auth';
+import {setIsToken} from '@/redux/reducers/account';
 
 const SignUpScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<LoginStackParamList>>();
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
 
   const schema = getValidationSchema(t);
 
@@ -39,8 +43,33 @@ const SignUpScreen = () => {
     },
   });
 
+  const handleSignup = async (data: {
+    username: string;
+    email: string;
+    password: string;
+  }) => {
+    try {
+      const {token, user} = await signup(data);
+      console.log('Signup Success:', user);
+
+      if (token) {
+        dispatch(setIsToken(true));
+      }
+
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'ProfilePage'}], //Gonna be updated after creating profile update page
+        }),
+      );
+    } catch (error) {
+      console.error('Signup error:', error);
+    }
+  };
+
   const onSubmit = (data: any) => {
     console.log('Form verisi:', data);
+    handleSignup(data);
   };
 
   return (
