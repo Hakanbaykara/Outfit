@@ -14,9 +14,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#F8FAFC',
-    padding: 16,
-    paddingBottom: 8,
+    padding: 8,
     justifyContent: 'space-between',
+  },
+  settingsSVG: {
+    right: 16,
   },
   headerTitle: {
     color: '#0D151C',
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 1,
-    paddingLeft: 48,
+    paddingLeft: 24,
   },
   profileContainer: {
     padding: 16,

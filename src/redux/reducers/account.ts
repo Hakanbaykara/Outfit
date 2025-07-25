@@ -1,5 +1,6 @@
 // src/redux/reducers/account.ts
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {clearToken} from '@/utils/authStorage';
 
 interface AccountState {
   email: string;
@@ -21,8 +22,13 @@ const accountSlice = createSlice({
     setIsToken: (state, action: PayloadAction<boolean>) => {
       state.isToken = action.payload;
     },
+    reset: state => {
+      clearToken();
+      setEmail('');
+      state.isToken = false;
+    },
   },
 });
 
-export const {setEmail, setIsToken} = accountSlice.actions;
+export const {setEmail, setIsToken, reset} = accountSlice.actions;
 export default accountSlice.reducer;

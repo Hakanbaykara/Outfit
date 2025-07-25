@@ -32,5 +32,15 @@ export const Tr = {
         requiredPassword: 'Şifre gerekli',
       },
     },
+    profile: {
+      settings: {
+        signOut: 'Çıkış Yap',
+        settings: 'Ayarlar',
+        editProfile: 'Profili düzenle',
+        notifications: 'Bildirimler',
+        privacy: 'Gizlilik',
+        about: 'Hakkında',
+      },
+    },
   },
 };

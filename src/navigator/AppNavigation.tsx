@@ -33,6 +33,7 @@ import ProfileScreen from '@/screens/ProfileScreen/ProfileScreen';
 import PostDetailScreen from '@/screens/PostDetailScreen/PostDetailScreen';
 import NewPostScreen from '@/screens/NewPostScreen/NewPostScreen';
 import LoginScreen from '@/screens/LoginScreen/LoginScreen';
+import SettingsScreen from '@/screens/ProfileScreen/SettingsScreen/SettingsScreen';
 
 function OutfitScreen() {
   return (
@@ -44,24 +45,16 @@ function OutfitScreen() {
 
 function getTabBarVisibility(route: RouteProp<ParamListBase, string>) {
   const routeName = getFocusedRouteNameFromRoute(route);
-  const hiddenRoutes = ['PostDetail', 'Login', 'SignUp'];
+  const hiddenRoutes = ['PostDetail', 'Auth', 'Login', 'SignUp'];
   return !hiddenRoutes.includes(routeName || '');
 }
 
-const getTabIcon = (routeName: string, focused: boolean): any => {
+const getTabIcon = (routeName: string): any => {
   switch (routeName) {
     case 'Home':
-      return focused
-        ? require('@/assets/images/home_active.png') // active icon
-        : require('@/assets/images/home.png');
+      return require('@/assets/images/home.png');
     case 'Outfit':
-      return focused
-        ? require('@/assets/images/outfit_active.png') // active icon
-        : require('@/assets/images/outfit.png');
-    case 'Auth':
-      return focused
-        ? require('@/assets/images/outfit_active.png') // active icon
-        : require('@/assets/images/outfit.png');
+      return require('@/assets/images/outfit.png');
     default:
       return require('@/assets/images/home.png');
   }
@@ -78,8 +71,8 @@ const screenOptions = ({
 
   return {
     headerShown: false,
-    tabBarIcon: ({focused}) => {
-      const iconSource = getTabIcon(route.name, focused);
+    tabBarIcon: () => {
+      const iconSource = getTabIcon(route.name);
       return <Image source={iconSource} style={styles.icon} />;
     },
     tabBarStyle: {
@@ -122,6 +115,7 @@ function ProfileStackNavigator() {
     <ProfileStack.Navigator screenOptions={{headerShown: false}}>
       <ProfileStack.Screen name="ProfilePage" component={ProfileScreen} />
       <ProfileStack.Screen name="PostDetail" component={PostDetailScreen} />
+      <ProfileStack.Screen name="Settings" component={SettingsScreen} />
     </ProfileStack.Navigator>
   );
 }

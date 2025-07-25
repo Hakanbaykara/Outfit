@@ -32,5 +32,15 @@ export const En = {
         requiredPassword: 'Password is required',
       },
     },
+    profile: {
+      settings: {
+        signOut: 'Sign Out',
+        settings: 'Settings',
+        editProfile: 'Edit Profile',
+        notifications: 'Notifications',
+        privacy: 'Privacy',
+        about: 'About',
+      },
+    },
   },
 };

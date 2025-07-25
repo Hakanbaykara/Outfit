@@ -25,4 +25,5 @@ export type ProfileStackParamList = {
   ProfilePage: undefined;
   PostDetail: {postId: string; imageUrl: string};
   NewPost: undefined;
+  Settings: undefined;
 };

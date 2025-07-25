@@ -18,9 +18,8 @@ function App(): React.JSX.Element {
         <SafeAreaProvider>
           <StatusBar
             barStyle="dark-content"
-            backgroundColor="transparent"
+            backgroundColor="#f8fafc"
             translucent={true}
-            hidden
           />
           <AppNavigator />
         </SafeAreaProvider>

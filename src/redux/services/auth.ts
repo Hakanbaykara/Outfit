@@ -18,14 +18,13 @@ export const signup = async (data: {
 
 export const login = async (data: {email: string; password: string}) => {
   try {
-    const {email, password} = data;
-    const res = await api.post('/auth/login', {email, password});
+    const res = await api.post('/auth/login', data);
 
     const {token, user} = res.data;
     await saveToken(token);
 
     return {token, user};
   } catch (err: any) {
-    throw err;
+    throw err.response?.data?.message;
   }
 };
