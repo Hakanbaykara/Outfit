@@ -64,6 +64,8 @@ const getTabIcon = (routeName: string): any => {
       return require('@/assets/images/home.png');
     case 'Outfit':
       return require('@/assets/images/outfit.png');
+    case 'Profile':
+      return require('@/assets/images/profile.png');
     default:
       return require('@/assets/images/home.png');
   }
@@ -84,6 +86,7 @@ const screenOptions = ({
       const iconSource = getTabIcon(route.name);
       return <Image source={iconSource} style={styles.icon} />;
     },
+    tabBarShowLabel: false,
     tabBarStyle: {
       display: showTabBar ? 'flex' : 'none',
     },
