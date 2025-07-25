@@ -35,10 +35,10 @@ import NewPostScreen from '@/screens/NewPostScreen/NewPostScreen';
 import LoginScreen from '@/screens/LoginScreen/LoginScreen';
 import SettingsScreen from '@/screens/ProfileScreen/SettingsScreen/SettingsScreen';
 
-function OutfitScreen() {
+function SearchScreen() {
   return (
     <View>
-      <Text>Outfit Suggestions</Text>
+      <Text>Search Suggestions</Text>
     </View>
   );
 }
@@ -62,8 +62,8 @@ const getTabIcon = (routeName: string): any => {
   switch (routeName) {
     case 'Home':
       return require('@/assets/images/home.png');
-    case 'Outfit':
-      return require('@/assets/images/outfit.png');
+    case 'Search':
+      return require('@/assets/images/search.png');
     case 'Profile':
       return require('@/assets/images/profile.png');
     default:
@@ -146,7 +146,7 @@ export default function AppNavigator() {
       <Tab.Navigator screenOptions={screenOptions}>
         {!isToken && <Tab.Screen name="Auth" component={LoginStackNavigator} />}
         {isToken && <Tab.Screen name="Home" component={HomeStackNavigator} />}
-        {isToken && <Tab.Screen name="Outfit" component={OutfitScreen} />}
+        {isToken && <Tab.Screen name="Search" component={SearchScreen} />}
         {isToken && (
           <Tab.Screen name="Profile" component={ProfileStackNavigator} />
         )}
