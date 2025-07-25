@@ -44,9 +44,18 @@ function OutfitScreen() {
 }
 
 function getTabBarVisibility(route: RouteProp<ParamListBase, string>) {
-  const routeName = getFocusedRouteNameFromRoute(route);
-  const hiddenRoutes = ['PostDetail', 'Auth', 'Login', 'SignUp'];
-  return !hiddenRoutes.includes(routeName || '');
+  const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+
+  const hiddenRoutes = ['PostDetail', 'Login', 'SignUp'];
+
+  if (
+    route.name === 'Auth' &&
+    (routeName === 'SignUp' || routeName === 'Login' || routeName === '')
+  ) {
+    return false;
+  }
+
+  return !hiddenRoutes.includes(routeName);
 }
 
 const getTabIcon = (routeName: string): any => {
