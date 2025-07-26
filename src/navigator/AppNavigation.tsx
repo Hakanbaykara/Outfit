@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, View} from 'react-native';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -25,6 +25,7 @@ import {
   HomeStackParamList,
   ProfileStackParamList,
   LoginStackParamList,
+  SearchStackParamList,
 } from '@/types/app';
 import HomeScreen from '@/screens/Home/Home';
 import {getPhoneInfo} from '@/helpers';
@@ -34,14 +35,7 @@ import PostDetailScreen from '@/screens/PostDetailScreen/PostDetailScreen';
 import NewPostScreen from '@/screens/NewPostScreen/NewPostScreen';
 import LoginScreen from '@/screens/LoginScreen/LoginScreen';
 import SettingsScreen from '@/screens/ProfileScreen/SettingsScreen/SettingsScreen';
-
-function SearchScreen() {
-  return (
-    <View>
-      <Text>Search Suggestions</Text>
-    </View>
-  );
-}
+import SearchScreen from '@/screens/SearchScreen/SearchScreen';
 
 function getTabBarVisibility(route: RouteProp<ParamListBase, string>) {
   const routeName = getFocusedRouteNameFromRoute(route) ?? '';
@@ -58,16 +52,28 @@ function getTabBarVisibility(route: RouteProp<ParamListBase, string>) {
   return !hiddenRoutes.includes(routeName);
 }
 
-const getTabIcon = (routeName: string): any => {
+const getTabIcon = (routeName: string, focused: boolean): any => {
   switch (routeName) {
     case 'Home':
-      return require('@/assets/images/home.png');
+      if (focused) {
+        return require('@/assets/images/home-button-active.png');
+      } else {
+        return require('@/assets/images/home-button.png');
+      }
     case 'Search':
-      return require('@/assets/images/search.png');
+      if (focused) {
+        return require('@/assets/images/search-button-active.png');
+      } else {
+        return require('@/assets/images/search-button.png');
+      }
     case 'Profile':
-      return require('@/assets/images/profile.png');
+      if (focused) {
+        return require('@/assets/images/profile-button-active.png');
+      } else {
+        return require('@/assets/images/profile-button.png');
+      }
     default:
-      return require('@/assets/images/home.png');
+      return require('@/assets/images/home-button.png');
   }
 };
 
@@ -82,9 +88,13 @@ const screenOptions = ({
 
   return {
     headerShown: false,
-    tabBarIcon: () => {
-      const iconSource = getTabIcon(route.name);
-      return <Image source={iconSource} style={styles.icon} />;
+    tabBarIcon: ({focused}) => {
+      const iconSource = getTabIcon(route.name, focused);
+      return (
+        <View style={styles.iconContainer}>
+          <Image source={iconSource} style={styles.icon} />
+        </View>
+      );
     },
     tabBarShowLabel: false,
     tabBarStyle: {
@@ -119,6 +129,17 @@ function HomeStackNavigator() {
   );
 }
 
+// Stack Navigator for Search tab
+const SearchStack = createNativeStackNavigator<SearchStackParamList>();
+
+function SearchStackNavigator() {
+  return (
+    <SearchStack.Navigator screenOptions={{headerShown: false}}>
+      <SearchStack.Screen name="SearchScreen" component={SearchScreen} />
+    </SearchStack.Navigator>
+  );
+}
+
 // Stack Navigator for Profile tab
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 
@@ -146,7 +167,9 @@ export default function AppNavigator() {
       <Tab.Navigator screenOptions={screenOptions}>
         {!isToken && <Tab.Screen name="Auth" component={LoginStackNavigator} />}
         {isToken && <Tab.Screen name="Home" component={HomeStackNavigator} />}
-        {isToken && <Tab.Screen name="Search" component={SearchScreen} />}
+        {isToken && (
+          <Tab.Screen name="Search" component={SearchStackNavigator} />
+        )}
         {isToken && (
           <Tab.Screen name="Profile" component={ProfileStackNavigator} />
         )}

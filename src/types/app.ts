@@ -24,6 +24,10 @@ export type HomeStackParamList = {
 export type ProfileStackParamList = {
   ProfilePage: undefined;
   PostDetail: {postId: string; imageUrl: string};
-  NewPost: undefined;
   Settings: undefined;
+};
+
+export type SearchStackParamList = {
+  SearchScreen: undefined;
+  PostDetail: {postId: string; imageUrl: string};
 };
