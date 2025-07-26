@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   View,
-  TextInput,
   FlatList,
   Text,
   Image,
@@ -71,24 +70,12 @@ const HomeScreen: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const counter = useAppSelector(state => state.outfit.value);
-  const [search, setSearch] = useState('');
 
   const insets = useSafeAreaInsets();
   return (
     <SafeAreaView style={[styles.safeArea, {paddingTop: insets.top}]}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search"
-          placeholderTextColor="#49779c"
-          value={search}
-          onChangeText={setSearch}
-        />
-      </View>
       <FlatList
-        data={POSTS.filter(p =>
-          p.name.toLowerCase().includes(search.toLowerCase()),
-        )}
+        data={POSTS}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <TouchableOpacity
