@@ -49,8 +49,7 @@ const SignUpScreen = () => {
     password: string;
   }) => {
     try {
-      const {token, user} = await signup(data);
-      console.log('Signup Success:', user);
+      const {token} = await signup(data);
 
       if (token) {
         dispatch(setIsToken(true));
@@ -59,7 +58,7 @@ const SignUpScreen = () => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{name: 'ProfilePage'}], //Gonna be updated after creating profile update page
+          routes: [{name: 'ProfilePage'}],
         }),
       );
     } catch (error) {
@@ -68,7 +67,6 @@ const SignUpScreen = () => {
   };
 
   const onSubmit = (data: any) => {
-    console.log('Form verisi:', data);
     handleSignup(data);
   };
 
@@ -133,7 +131,6 @@ const SignUpScreen = () => {
               <TouchableOpacity
                 onPress={() => {
                   onChange(!value);
-                  console.log('click', value);
                 }}
                 style={[
                   styles.checkboxBox,

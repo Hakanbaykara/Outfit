@@ -39,8 +39,7 @@ const LoginScreen: React.FC = () => {
 
   const handleLogin = async (data: {email: string; password: string}) => {
     try {
-      const user = await login(data);
-      console.log('Welcome', user);
+      await login(data);
 
       const token = await getToken();
       if (token) {
@@ -52,7 +51,6 @@ const LoginScreen: React.FC = () => {
   };
 
   const onSubmit = (data: FormValues) => {
-    console.log('Login data:', data);
     handleLogin(data);
   };
 

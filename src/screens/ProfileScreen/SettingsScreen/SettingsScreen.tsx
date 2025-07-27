@@ -37,7 +37,6 @@ const SettingsScreen: React.FC = () => {
 
   const handleSignOut = () => {
     dispatch(reset());
-    console.log('click');
   };
 
   return (

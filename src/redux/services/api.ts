@@ -4,6 +4,7 @@ import {STAGING_API_URL} from '@env';
 
 const api = axios.create({
   baseURL: STAGING_API_URL,
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
