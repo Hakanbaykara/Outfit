@@ -10,7 +10,17 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingBottom: 0,
+  },
+  arrowContainer: {
+    height: 30,
+    width: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  arrowLeft: {
+    height: 24,
+    width: 24,
   },
   mainImage: {
     width: '100%',
